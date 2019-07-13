@@ -1,0 +1,46 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+///<summary>
+///相机的移动
+///</summary>
+public class CameraMove : MonoBehaviour
+{
+    public float speed;
+    private void Update()
+    {
+        //这里的Horizontal和Vertical两个是水平和竖直方向上的关键词，而GetAxis()返回的是一个float值
+        float h = Input.GetAxis("Horizontal");
+        float v = Input.GetAxis("Vertical");
+        transform.Translate(new Vector3(h, v, 0) * Time.deltaTime * speed);
+    }
+}
+
+
+
+
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+///<summary>
+///实例化
+///</summary>
+public class CreatBullet : MonoBehaviour
+{
+    public GameObject bulletPrefab;
+    public int speed=0;
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            //这里初始化的方式是使用预制体初始化，在inspacter面板上操作
+            GameObject bullet = GameObject.Instantiate(bulletPrefab, this.transform.position, this.transform.rotation);
+            //给物体添加速度的思路：获取该物体的刚体组件
+            bullet.gameObject.GetComponent<Rigidbody>().velocity = transform.forward*speed;
+        }
+    }
+}
